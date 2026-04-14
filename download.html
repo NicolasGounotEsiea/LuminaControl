@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Téléchargement — Lumina Control</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0D0D0D;
+      color: #E0E0E0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    .card {
+      background: #181818;
+      border: 1px solid rgba(96,205,255,0.20);
+      border-radius: 16px;
+      padding: 52px 48px;
+      max-width: 480px;
+      box-shadow: 0 0 60px rgba(96,205,255,0.06);
+    }
+    .icon { font-size: 48px; margin-bottom: 24px; }
+    h1 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .sub { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 32px; }
+    .sub strong { color: #60CDFF; }
+    .btn {
+      display: inline-block;
+      background: #60CDFF; color: #000;
+      font-weight: 700; font-size: 15px;
+      padding: 13px 32px; border-radius: 10px;
+      text-decoration: none;
+    }
+    .note { font-size: 12px; color: #444; margin-top: 20px; }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid rgba(96,205,255,0.15);
+      border-top-color: #60CDFF;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="spinner" id="spinner"></div>
+    <div class="icon" id="icon" style="display:none">✅</div>
+    <h1 id="title">Téléchargement en cours…</h1>
+    <p class="sub" id="sub">
+      Merci pour votre achat !<br>
+      Votre clé de licence arrive dans quelques minutes par <strong>email</strong>.
+    </p>
+    <a id="btn" class="btn" style="display:none"
+       href="https://github.com/lumina-control-app/LuminaControl/releases/download/v1.2.5/LuminaControlSetup.exe">
+      Télécharger manuellement
+    </a>
+    <p class="note">Lumina Control · Windows 10 / 11</p>
+  </div>
+
+  <script>
+    var url = "https://github.com/lumina-control-app/LuminaControl/releases/download/v1.2.5/LuminaControlSetup.exe";
+
+    // Déclenche le téléchargement immédiatement
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "LuminaControlSetup.exe";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Après 2s, affiche l'état "démarré"
+    setTimeout(function() {
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("icon").style.display = "block";
+      document.getElementById("title").textContent = "Téléchargement démarré !";
+      document.getElementById("btn").style.display = "inline-block";
+    }, 2000);
+  </script>
+</body>
+</html>
