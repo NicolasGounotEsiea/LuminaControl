@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Lumina Control — Banner</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1760px;
+      height: 1000px;
+      overflow: hidden;
+      background: #0D0D0D;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Fond grille ── */
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(96,205,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96,205,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Halo accent ── */
+    .bg-glow {
+      position: absolute;
+      width: 900px; height: 900px;
+      top: 50%; left: 38%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse at center,
+        rgba(96,205,255,0.07) 0%,
+        rgba(96,205,255,0.03) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Layout principal ── */
+    .layout {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 80px 120px;
+      gap: 100px;
+    }
+
+    /* ── Côté gauche ── */
+    .left { flex: 1; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(96,205,255,0.10);
+      border: 1px solid rgba(96,205,255,0.30);
+      color: #60CDFF;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 18px; border-radius: 20px;
+      margin-bottom: 32px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #60CDFF;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-size: 80px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
+    h1 em { color: #60CDFF; font-style: normal; }
+
+    .subtitle {
+      font-size: 22px;
+      color: #777;
+      line-height: 1.6;
+      margin-bottom: 52px;
+      max-width: 580px;
+    }
+
+    .pills {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 56px;
+    }
+    .pill {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 14px; color: #aaa;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pill-icon { font-size: 16px; }
+
+    .price-row {
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .price {
+      font-size: 64px; font-weight: 800; color: #fff;
+      line-height: 1;
+    }
+    .price sup { font-size: 30px; vertical-align: super; }
+    .price-note { font-size: 16px; color: #555; }
+
+    /* ── Côté droit — Mockup ── */
+    .right {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-window {
+      width: 420px;
+      background: #1A1A1A;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 20px;
+      box-shadow:
+        0 40px 100px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(96,205,255,0.06),
+        0 0 80px rgba(96,205,255,0.05);
+      overflow: hidden;
+    }
+
+    .win-titlebar {
+      background: #141414;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .win-dots { display: flex; gap: 7px; }
+    .win-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+    .win-dot.r { background: #FF5F57; }
+    .win-dot.y { background: #FEBC2E; }
+    .win-dot.g { background: #28C840; }
+    .win-title { font-size: 13px; font-weight: 600; color: #888; margin-left: 4px; }
+
+    .win-body { padding: 24px; }
+
+    .monitor-card {
+      background: #222;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .mc-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px;
+    }
+    .mc-name { font-size: 13px; font-weight: 700; color: #ddd; }
+    .mc-pos { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.06em; }
+    .mc-power {
+      width: 28px; height: 16px; border-radius: 8px;
+      background: rgba(96,205,255,0.20);
+      border: 1px solid rgba(96,205,255,0.40);
+      display: flex; align-items: center; padding: 2px;
+    }
+    .mc-power-knob {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #60CDFF; margin-left: auto;
+    }
+
+    .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .slider-lbl { font-size: 11px; color: #555; width: 28px; }
+    .slider-track { flex: 1; height: 5px; background: #2E2E2E; border-radius: 3px; }
+    .slider-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3BA8D8, #60CDFF); }
+    .slider-val { font-size: 11px; color: #888; width: 34px; text-align: right; }
+
+    .circadian-badge {
+      margin-top: 4px;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(96,205,255,0.08);
+      border: 1px solid rgba(96,205,255,0.18);
+      border-radius: 8px; padding: 8px 14px;
+      font-size: 11px; color: #60CDFF; font-weight: 600;
+      width: 100%;
+    }
+    .cdot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #60CDFF; animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    /* ── Features mini ── */
+    .features-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .feat-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: #666;
+    }
+    .feat-check { color: #60CDFF; font-weight: 700; font-size: 13px; }
+
+    /* ── Coin watermark ── */
+    .watermark {
+      position: absolute;
+      bottom: 40px; right: 120px;
+      font-size: 13px; color: #333;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="layout">
+
+  <!-- Gauche -->
+  <div class="left">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Windows 10 / 11 · DDC-CI
+    </div>
+
+    <h1>Lumina<br><em>Control</em></h1>
+
+    <p class="subtitle">
+      Contrôle DDC-CI multi-moniteurs.<br>
+      Circadien, gaming automatique,<br>règles par app — 100% hors ligne.
+    </p>
+
+    <div class="pills">
+      <div class="pill"><span class="pill-icon">🌅</span> Mode circadien</div>
+      <div class="pill"><span class="pill-icon">🎮</span> Gaming auto</div>
+      <div class="pill"><span class="pill-icon">🎯</span> Mode Focus</div>
+      <div class="pill"><span class="pill-icon">📋</span> Règles par app</div>
+      <div class="pill"><span class="pill-icon">⌨️</span> Raccourcis globaux</div>
+      <div class="pill"><span class="pill-icon">🔒</span> Hors ligne</div>
+    </div>
+
+    <div class="price-row">
+      <div class="price"><sup>€</sup>4</div>
+      <div class="price-note">Paiement unique · Licence à vie</div>
+    </div>
+  </div>
+
+  <!-- Droite — Mockup app -->
+  <div class="right">
+    <div class="app-window">
+      <div class="win-titlebar">
+        <div class="win-dots">
+          <div class="win-dot r"></div>
+          <div class="win-dot y"></div>
+          <div class="win-dot g"></div>
+        </div>
+        <div class="win-title">Lumina Control</div>
+      </div>
+      <div class="win-body">
+
+        <div class="monitor-card">
+          <div class="mc-header">
+            <div>
+              <div class="mc-name">DELL U2722D</div>
+              <div class="mc-pos">Écran 1 · Principal</div>
+            </div>
+            <div class="mc-power"><div class="mc-power-knob"></div></div>
+          </div>
+          <div class="slider-row">
+            <div class="slider-lbl">Bri</div>
+            <div class="slider-track"><div class="slider-fill" style="width:72%"></div></div>
+            <div class="slider-val">72%</div>
+          </div>
+          <div class="slider-row">
+            <div class="slider-lbl">Con</div>
+            <div class="slider-track"><div class="slider-fill" style="width:55%"></div></div>
+            <div class="slider-val">55%</div>
+          </div>
+          <div class="slider-row" style="margin-bottom:0">
+            <div class="slider-lbl">γ</div>
+            <div class="slider-track"><div class="slider-fill" style="width:50%"></div></div>
+            <div class="slider-val">1.0</div>
+          </div>
+        </div>
+
+        <div class="monitor-card">
+          <div class="mc-header">
+            <div>
+              <div class="mc-name">LG 27UK850</div>
+              <div class="mc-pos">Écran 2 · Gauche</div>
+            </div>
+            <div class="mc-power"><div class="mc-power-knob"></div></div>
+          </div>
+          <div class="slider-row">
+            <div class="slider-lbl">Bri</div>
+            <div class="slider-track"><div class="slider-fill" style="width:65%"></div></div>
+            <div class="slider-val">65%</div>
+          </div>
+          <div class="slider-row" style="margin-bottom:0">
+            <div class="slider-lbl">Con</div>
+            <div class="slider-track"><div class="slider-fill" style="width:55%"></div></div>
+            <div class="slider-val">55%</div>
+          </div>
+        </div>
+
+        <div class="circadian-badge">
+          <div class="cdot"></div>
+          Mode circadien actif · Coucher 20h27 · Chaleur 34%
+        </div>
+
+        <div class="features-mini">
+          <div class="feat-row"><span class="feat-check">✓</span> Activation hors ligne — aucun compte requis</div>
+          <div class="feat-row"><span class="feat-check">✓</span> Paiement unique — mises à jour incluses</div>
+          <div class="feat-row"><span class="feat-check">✓</span> FR / EN — Windows 10 &amp; 11</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="watermark">luminacontrol.app</div>
+
+</body>
+</html>

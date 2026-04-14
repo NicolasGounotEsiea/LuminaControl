@@ -94,8 +94,8 @@
     .btn-nav:hover { opacity: .85; text-decoration: none; }
 
     /* ── Hero ─────────────────────────────────────────────────────────── */
-    .hero {
-      padding: 96px 0 80px;
+    .hero { padding: 96px 0 80px; }
+    .hero .container {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px; align-items: center;
@@ -306,7 +306,8 @@
 
     /* ── Responsive ───────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .hero { grid-template-columns: 1fr; gap: 48px; padding: 64px 0 48px; }
+      .hero .container { grid-template-columns: 1fr; gap: 48px; }
+      .hero { padding: 64px 0 48px; }
       .hero-visual { order: -1; }
       .features-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
@@ -334,7 +335,7 @@
 
 <!-- ── Hero ────────────────────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="container" style="display:contents">
+  <div class="container">
 
     <div class="hero-content">
       <div class="hero-eyebrow">
@@ -645,6 +646,21 @@
     </div>
 
     <div class="faq-grid">
+
+      <div class="faq-item" style="border-color:rgba(255,200,0,0.20);background:#1A1800;">
+        <div class="faq-q" style="display:flex;align-items:center;gap:10px;">
+          <span>⚠️</span> Windows affiche un avertissement de sécurité, est-ce normal ?
+        </div>
+        <div class="faq-a">
+          Oui, c'est normal. Windows SmartScreen signale les exécutables qui ne possèdent pas de
+          <strong style="color:#ccc">certificat de signature de code</strong> (coûte plusieurs centaines d'euros/an).
+          Lumina Control est un logiciel indépendant qui n'en dispose pas encore.<br /><br />
+          Pour installer en toute sécurité : cliquez sur <strong style="color:#ccc">"Informations complémentaires"</strong>
+          puis <strong style="color:#ccc">"Exécuter quand même"</strong>. Le code source est disponible sur
+          <a href="https://github.com/lumina-control-app/LuminaControl" target="_blank">GitHub</a>
+          si vous souhaitez le vérifier.
+        </div>
+      </div>
 
       <div class="faq-item">
         <div class="faq-q">Mon moniteur est-il compatible ?</div>
