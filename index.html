@@ -112,25 +112,68 @@
     .hero-note { font-size: 12px; color: #555; }
     .hero-note span { margin: 0 8px; }
 
-    /* Video frame */
+    /* ── Interactive mockup ───────────────────────────────────────────── */
     .hero-visual { display: flex; justify-content: center; align-items: center; }
-    .video-frame {
-      border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.10);
+    .int-mockup {
+      background: #1C1C1C; border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px; overflow: hidden; width: 100%; max-width: 320px;
       box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,205,255,0.08);
-      width: 100%; max-width: 460px;
     }
-    .video-frame-bar {
-      background: #1C1C1C; border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+    .int-bar {
+      background: #141414; border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 11px 16px; display: flex; align-items: center; gap: 10px;
     }
-    .vf-dots { display: flex; gap: 6px; }
-    .vf-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .vf-dot.r { background: #FF5F57; }
-    .vf-dot.y { background: #FEBC2E; }
-    .vf-dot.g { background: #28C840; }
-    .vf-title { font-size: 12px; color: #555; font-weight: 500; }
-    .video-frame video { display: block; width: 100%; height: auto; }
+    .int-dots { display: flex; gap: 6px; }
+    .int-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .int-dot.r { background: #FF5F57; }
+    .int-dot.y { background: #FEBC2E; }
+    .int-dot.g { background: #28C840; }
+    .int-bar-title { font-size: 12px; color: #555; }
+    /* Écran simulé */
+    .int-screen {
+      height: 120px; overflow: hidden; position: relative;
+      transition: filter 0.2s ease;
+    }
+    .int-wallpaper {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #0a2a4a 0%, #1a5070 50%, #0d3550 100%);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .int-wp-icons { display: flex; gap: 12px; padding: 12px 14px; }
+    .int-wp-icon {
+      width: 32px; height: 32px; border-radius: 7px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .int-taskbar {
+      background: rgba(0,0,0,0.5); padding: 5px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .int-taskbar-clock { font-size: 9px; color: rgba(255,255,255,0.55); }
+    /* Card contrôles */
+    .int-card { padding: 14px 16px 8px; }
+    .int-card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+    .int-mon-name { font-size: 12px; font-weight: 700; color: #ddd; }
+    .int-mon-pos { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.06em; }
+    .int-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .int-lbl { font-size: 10px; color: #555; width: 24px; flex-shrink: 0; }
+    .int-val { font-size: 10px; color: #888; width: 30px; text-align: right; flex-shrink: 0; }
+    .int-slider {
+      flex: 1; -webkit-appearance: none; appearance: none;
+      height: 4px; border-radius: 2px; outline: none; cursor: pointer;
+    }
+    .int-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%;
+      background: #fff; box-shadow: 0 0 0 2px rgba(96,205,255,0.4); cursor: grab;
+    }
+    .int-slider:active::-webkit-slider-thumb { cursor: grabbing; }
+    .int-status {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(96,205,255,0.07); border-top: 1px solid rgba(96,205,255,0.12);
+      padding: 8px 16px; font-size: 10px; color: #60CDFF; font-weight: 600;
+    }
+    .int-hint { font-size: 10px; color: #3a3a3a; text-align: center; padding: 5px 16px 12px; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
@@ -348,18 +391,61 @@
     </div>
 
     <div class="hero-visual">
-      <div class="video-frame">
-        <div class="video-frame-bar">
-          <div class="vf-dots">
-            <span class="vf-dot r"></span>
-            <span class="vf-dot y"></span>
-            <span class="vf-dot g"></span>
+      <div class="int-mockup">
+        <div class="int-bar">
+          <div class="int-dots">
+            <span class="int-dot r"></span>
+            <span class="int-dot y"></span>
+            <span class="int-dot g"></span>
           </div>
-          <span class="vf-title">Lumina Control</span>
+          <span class="int-bar-title">Lumina Control</span>
         </div>
-        <video autoplay loop muted playsinline>
-          <source src="demo.mp4" type="video/mp4" />
-        </video>
+
+        <div class="int-screen" id="demo-screen">
+          <div class="int-wallpaper">
+            <div class="int-wp-icons">
+              <div class="int-wp-icon">📁</div>
+              <div class="int-wp-icon">🌐</div>
+              <div class="int-wp-icon">🎮</div>
+              <div class="int-wp-icon">🎵</div>
+            </div>
+            <div class="int-taskbar">
+              <span style="font-size:12px;color:rgba(255,255,255,0.6)">⊞</span>
+              <span class="int-taskbar-clock" id="demo-clock">20:27</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="int-card">
+          <div class="int-card-header">
+            <span class="int-mon-name">DELL U2722D</span>
+            <span class="int-mon-pos">Principal</span>
+          </div>
+          <div class="int-row">
+            <span class="int-lbl">Bri</span>
+            <input type="range" class="int-slider" id="s-bri" min="10" max="100" value="72"
+              style="background:linear-gradient(90deg,#3BA8D8 72%,#333 72%)">
+            <span class="int-val" id="v-bri">72%</span>
+          </div>
+          <div class="int-row">
+            <span class="int-lbl">Con</span>
+            <input type="range" class="int-slider" id="s-con" min="10" max="100" value="55"
+              style="background:linear-gradient(90deg,#3BA8D8 55%,#333 55%)">
+            <span class="int-val" id="v-con">55%</span>
+          </div>
+          <div class="int-row">
+            <span class="int-lbl" style="color:#FFA040">☀</span>
+            <input type="range" class="int-slider" id="s-warm" min="0" max="100" value="0"
+              style="background:#333">
+            <span class="int-val" id="v-warm">0%</span>
+          </div>
+        </div>
+
+        <div class="int-status">
+          <div class="dot"></div>
+          Mode circadien actif · Coucher 20:27
+        </div>
+        <div class="int-hint">↑ Essayez les curseurs</div>
       </div>
     </div>
 
@@ -633,5 +719,60 @@
   </div>
 </footer>
 
+<script>
+  (function() {
+    var screen  = document.getElementById('demo-screen');
+    var sBri    = document.getElementById('s-bri');
+    var sCon    = document.getElementById('s-con');
+    var sWarm   = document.getElementById('s-warm');
+    var vBri    = document.getElementById('v-bri');
+    var vCon    = document.getElementById('v-con');
+    var vWarm   = document.getElementById('v-warm');
+
+    function pct(v, min, max) { return Math.round((v - min) / (max - min) * 100); }
+
+    function update() {
+      var bri  = parseInt(sBri.value);
+      var con  = parseInt(sCon.value);
+      var warm = parseInt(sWarm.value);
+
+      // Mise à jour labels
+      vBri.textContent  = bri  + '%';
+      vCon.textContent  = con  + '%';
+      vWarm.textContent = warm + '%';
+
+      // Mise à jour couleur des tracks
+      sBri.style.background  = 'linear-gradient(90deg,#3BA8D8 ' + bri  + '%,#333 ' + bri  + '%)';
+      sCon.style.background  = 'linear-gradient(90deg,#3BA8D8 ' + con  + '%,#333 ' + con  + '%)';
+      sWarm.style.background = 'linear-gradient(90deg,#FFA040 ' + warm + '%,#333 ' + warm + '%)';
+
+      // Calcul du filtre CSS sur l'écran simulé
+      var brightness = (bri  / 100) * 1.0 + 0.05;
+      var contrast   = 0.6 + (con / 100) * 0.8;
+      var sepia      = (warm / 100) * 0.75;
+      var saturate   = 1 + (warm / 100) * 0.5;
+
+      screen.style.filter =
+        'brightness(' + brightness.toFixed(2) + ') ' +
+        'contrast('   + contrast.toFixed(2)   + ') ' +
+        'sepia('      + sepia.toFixed(2)       + ') ' +
+        'saturate('   + saturate.toFixed(2)    + ')';
+    }
+
+    sBri.addEventListener('input',  update);
+    sCon.addEventListener('input',  update);
+    sWarm.addEventListener('input', update);
+
+    // Horloge en temps réel
+    function tick() {
+      var now = new Date();
+      var h = String(now.getHours()).padStart(2,'0');
+      var m = String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('demo-clock').textContent = h + ':' + m;
+    }
+    tick();
+    setInterval(tick, 10000);
+  })();
+</script>
 </body>
 </html>
