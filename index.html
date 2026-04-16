@@ -64,6 +64,67 @@
       max-width: 560px; line-height: 1.7;
     }
 
+    /* ── Early-access banner ─────────────────────────────────────────── */
+    .ea-banner {
+      background: linear-gradient(90deg, #1a0a00, #1f1000, #1a0a00);
+      border-bottom: 1px solid rgba(255,160,40,0.25);
+      padding: 10px 0;
+      text-align: center;
+      font-size: 13px;
+      position: relative;
+    }
+    .ea-banner-inner {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 10px 18px;
+    }
+    .ea-tag {
+      background: #FF9A00; color: #000;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 9px; border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .ea-text { color: #E0E0E0; }
+    .ea-text strong { color: #fff; }
+    .ea-price-old {
+      color: #666; text-decoration: line-through;
+      font-size: 13px;
+    }
+    .ea-price-new {
+      color: #FF9A00; font-weight: 800; font-size: 15px;
+    }
+    .ea-spots {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: #888;
+    }
+    .ea-spots-bar {
+      width: 80px; height: 4px; border-radius: 2px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .ea-spots-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, #FF9A00, #FFc040);
+      width: 38%; /* à ajuster manuellement */
+      transition: width .6s ease;
+    }
+    .ea-spots-label { color: #aaa; white-space: nowrap; }
+    .ea-cta {
+      background: #FF9A00; color: #000;
+      font-size: 12px; font-weight: 800;
+      padding: 5px 16px; border-radius: 6px;
+      text-decoration: none; white-space: nowrap;
+      transition: opacity .2s;
+      flex-shrink: 0;
+    }
+    .ea-cta:hover { opacity: .85; text-decoration: none; }
+    .ea-close {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; color: #444; cursor: pointer;
+      line-height: 1; background: none; border: none; padding: 4px;
+    }
+    .ea-close:hover { color: #888; }
+
     /* ── Nav ──────────────────────────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
@@ -490,6 +551,22 @@
   </style>
 </head>
 <body>
+
+<!-- ── Early-access banner ───────────────────────────────────────────────── -->
+<div class="ea-banner" id="ea-banner">
+  <div class="container ea-banner-inner">
+    <span class="ea-tag">Early Access</span>
+    <span class="ea-text"><strong>Offre de lancement</strong> — prix définitif</span>
+    <span class="ea-price-old">9,99 €</span>
+    <span class="ea-price-new">4 €</span>
+    <div class="ea-spots">
+      <div class="ea-spots-bar"><div class="ea-spots-fill" id="ea-fill"></div></div>
+      <span class="ea-spots-label" id="ea-spots-label">19 places restantes</span>
+    </div>
+    <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/ae9ee0d1-c6cb-43ba-b545-b71976163c64" class="ea-cta">En profiter →</a>
+  </div>
+  <button class="ea-close" id="ea-close" aria-label="Fermer">✕</button>
+</div>
 
 <!-- ── Navigation ──────────────────────────────────────────────────────────── -->
 <nav>
@@ -1227,6 +1304,37 @@
 
     document.getElementById('compat-recheck').addEventListener('click', runCompatScan);
     runCompatScan();
+
+    // ── Early-access banner ───────────────────────────────────────────
+    (function() {
+      var banner = document.getElementById('ea-banner');
+      if (!banner) return;
+
+      var TOTAL = 25; // nombre total de places early access
+
+      function updateSpots(sold) {
+        var remaining = Math.max(0, TOTAL - sold);
+        var pct = Math.min(100, Math.round((sold / TOTAL) * 100));
+        var fill  = document.getElementById('ea-fill');
+        var label = document.getElementById('ea-spots-label');
+        if (fill)  fill.style.width = pct + '%';
+        if (label) label.textContent = remaining > 0
+          ? remaining + ' place' + (remaining > 1 ? 's' : '') + ' restante' + (remaining > 1 ? 's' : '')
+          : 'Offre terminée';
+      }
+
+      // Valeur par défaut affichée immédiatement
+      updateSpots(0);
+
+      fetch('https://eox4cwc7rkixiu6.m.pipedream.net')
+        .then(function(r) { return r.json(); })
+        .then(function(d) { updateSpots(d.count || 0); })
+        .catch(function() { /* garde la valeur par défaut */ });
+
+      document.getElementById('ea-close').addEventListener('click', function() {
+        banner.style.display = 'none';
+      });
+    })();
 
     // Toggle interactif / vidéo
     var btnI = document.getElementById('btn-interactive');
