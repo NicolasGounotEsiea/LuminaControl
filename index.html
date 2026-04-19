@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Lumina Control — Contrôle DDC-CI multi-moniteurs pour Windows. Mode circadien, gaming automatique, planification horaire, raccourcis globaux." />
+  <meta name="description" content="Lumina Control — Automatisation complète de vos moniteurs sous Windows. Détection gaming, mode circadien, profils par application, support laptop WMI. Sans driver tiers, sans abonnement." />
   <link rel="icon" type="image/png" href="favicon.png" />
-  <title>Lumina Control — Contrôle avancé de vos moniteurs</title>
+  <title>Lumina Control — Vos moniteurs, enfin intelligents</title>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -170,7 +170,7 @@
       transition: background .2s; display: inline-block;
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.10); text-decoration: none; }
-    .hero-note { font-size: 12px; color: #555; }
+    .hero-note { font-size: 12px; color: #666; }
     .hero-note span { margin: 0 8px; }
 
     /* ── View toggle ──────────────────────────────────────────────────── */
@@ -376,9 +376,15 @@
     .compat-detect-btn:hover { background: rgba(96,205,255,0.14); }
     .compat-detect-btn:disabled { opacity: .5; cursor: default; }
 
-    /* ── OS Strip ─────────────────────────────────────────────────────── */
-    .os-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; text-align: center; }
-    .os-strip p { font-size: 12px; color: #444; letter-spacing: 0.06em; text-transform: uppercase; }
+    /* ── OS Strip / Trust strip ──────────────────────────────────────── */
+    .os-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .os-strip-inner {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 4px 24px;
+    }
+    .os-item { font-size: 12px; color: #606060; }
+    .os-item strong { color: #888; font-weight: 600; }
+    .os-sep { color: #2a2a2a; font-size: 16px; line-height: 1; }
 
     /* ── Demo vidéo ───────────────────────────────────────────────────── */
     .demo { padding: 80px 0; text-align: center; }
@@ -522,6 +528,8 @@
     }
     .btn-buy:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
     .pricing-note { font-size: 11px; color: #444; margin-top: 16px; }
+    .pricing-guarantee { font-size: 12px; color: #606060; margin-top: 14px; }
+    .pricing-guarantee strong { color: #808080; }
     .pricing-spots {
       display: flex; align-items: center; gap: 10px;
       background: rgba(255,160,40,0.06); border: 1px solid rgba(255,160,40,0.18);
@@ -616,6 +624,41 @@
     .creator-card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .creator-card-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
 
+    /* ── Pourquoi Lumina ────────────────────────────────────────────── */
+    .why { padding: 80px 0 64px; }
+    .why-header { text-align: center; margin-bottom: 52px; }
+    .why-header .section-sub { margin: 0 auto; }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
+      margin-bottom: 64px;
+    }
+    .why-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 22px;
+      transition: border-color .2s;
+    }
+    .why-card:hover { border-color: rgba(96,205,255,0.22); }
+    .why-icon { font-size: 26px; margin-bottom: 14px; }
+    .why-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .why-desc { font-size: 13px; color: var(--subtle); line-height: 1.6; }
+
+    /* ── Pour qui ────────────────────────────────────────────────────── */
+    .forwho { border-top: 1px solid var(--border); padding-top: 56px; }
+    .forwho-label { text-align: center; margin-bottom: 28px; }
+    .forwho-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+    }
+    .forwho-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 20px 18px; background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color .2s;
+    }
+    .forwho-item:hover { border-color: rgba(96,205,255,0.18); }
+    .forwho-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .forwho-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+    .forwho-desc { font-size: 13px; color: var(--subtle); line-height: 1.5; }
+
     /* ── Responsive ───────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .hero .container { grid-template-columns: 1fr; gap: 48px; }
@@ -629,6 +672,8 @@
       .creators-row { grid-template-columns: 1fr; gap: 40px; }
       .creators-cards { grid-template-columns: 1fr; }
       .curve-demo { max-width: 100%; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .forwho-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -655,6 +700,7 @@
   <div class="container nav-inner">
     <div class="nav-logo">Lumina<span>Control</span></div>
     <div class="nav-links">
+      <a href="#why">Pourquoi</a>
       <a href="#features">Fonctionnalités</a>
       <a href="#creators">Créateurs & Pros</a>
       <a href="#comparison">Comparatif</a>
@@ -672,16 +718,17 @@
 
     <div class="hero-content">
       <div class="hero-eyebrow">
-        <span class="badge">Windows 10 / 11 · DDC-CI</span>
+        <span class="badge">Windows 10 / 11 · Tous moniteurs</span>
       </div>
-      <h1>Vos moniteurs,<br><em>à votre rythme</em></h1>
+      <h1>Vos moniteurs,<br><em>enfin intelligents.</em></h1>
       <p class="hero-sub">
-        Contrôle DDC-CI multi-écrans, mode circadien calé sur le soleil,
-        gaming automatique et planification horaire. Tout ça, hors ligne et sans abonnement.
+        Lumina Control détecte ce que vous faites — jeu en plein écran,
+        application en focus, heure de la journée — et ajuste chaque écran
+        automatiquement. Sans driver tiers. Sans abonnement.
       </p>
       <div class="hero-actions">
         <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-primary">Acheter — 4€</a>
-        <a href="#demo" class="btn-secondary">Voir la démo</a>
+        <a href="#features" class="btn-secondary">Voir les fonctionnalités</a>
       </div>
       <div class="hero-note">
         Activation hors ligne <span>·</span> Paiement unique <span>·</span> Mises à jour incluses <span>·</span> FR / EN
@@ -798,13 +845,107 @@
 </section>
 
 
-<!-- ── OS Strip ─────────────────────────────────────────────────────────────── -->
+<!-- ── Trust Strip ───────────────────────────────────────────────────────────── -->
 <div class="os-strip">
-  <div class="container">
-    <p>Compatible Windows 10 &amp; 11 · Fonctionne avec tous les moniteurs DDC-CI</p>
+  <div class="container os-strip-inner">
+    <span class="os-item">🪟 <strong>Windows 10 &amp; 11</strong></span>
+    <span class="os-sep">·</span>
+    <span class="os-item">🔌 <strong>Sans driver tiers</strong></span>
+    <span class="os-sep">·</span>
+    <span class="os-item">💻 <strong>DDC-CI + dalles laptop</strong></span>
+    <span class="os-sep">·</span>
+    <span class="os-item">🔒 <strong>100 % hors ligne</strong></span>
+    <span class="os-sep">·</span>
+    <span class="os-item">💳 <strong>4 € · paiement unique</strong></span>
   </div>
 </div>
 
+
+
+<!-- ── Pourquoi Lumina ──────────────────────────────────────────────────────── -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-header">
+      <p class="section-label">Pourquoi Lumina</p>
+      <h2 class="section-title">Windows a un curseur.<br>Lumina <em>automatise</em> tout le reste.</h2>
+      <p class="section-sub">Twinkle Tray est gratuit. Windows a le mode Nuit. L'OSD de votre moniteur fait le travail. Alors pourquoi Lumina Control ?</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🤖</div>
+        <div class="why-title">Zéro manipulation manuelle</div>
+        <div class="why-desc">Détection gaming automatique, profil circadien calé sur le vrai lever du soleil, règles par application. Tout s'active seul en arrière-plan — vous n'y pensez plus.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔌</div>
+        <div class="why-title">Aucun driver tiers</div>
+        <div class="why-desc">DDC-CI via l'API Windows native, gamma via GDI32, dalle laptop via WMI. Zéro driver kernel, zéro risque BSOD, désinstallation propre en 2 clics.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🖥️</div>
+        <div class="why-title">Tous vos écrans, y compris le laptop</div>
+        <div class="why-desc">DDC-CI pour les moniteurs externes, WMI pour la dalle intégrée. Un seul panneau, une seule interface — même configuration multi-écrans mixte.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <div class="why-title">100% hors ligne, licence à vie</div>
+        <div class="why-desc">Activation par clé cryptographique locale. Pas de serveur, pas de compte, pas de télémétrie. Vous payez 4€ une fois, vous utilisez pour toujours.</div>
+      </div>
+    </div>
+
+    <div class="forwho">
+      <div class="forwho-label">
+        <p class="section-label">Pour qui ?</p>
+      </div>
+      <div class="forwho-grid">
+        <div class="forwho-item">
+          <span class="forwho-icon">🖥️</span>
+          <div>
+            <div class="forwho-title">Setup multi-moniteurs</div>
+            <div class="forwho-desc">Sync maître/esclave, position automatique (Gauche / Droite / Principal), profil indépendant par écran.</div>
+          </div>
+        </div>
+        <div class="forwho-item">
+          <span class="forwho-icon">🎮</span>
+          <div>
+            <div class="forwho-title">Gamers</div>
+            <div class="forwho-desc">Preset luminosité/contraste appliqué dès qu'un jeu passe en plein écran — et annulé automatiquement à l'alt-tab.</div>
+          </div>
+        </div>
+        <div class="forwho-item">
+          <span class="forwho-icon">🎨</span>
+          <div>
+            <div class="forwho-title">Photographes & coloristes</div>
+            <div class="forwho-desc">Éditeur de courbes tonales par canal, export ICC v2 compatible Lightroom, Photoshop et DaVinci Resolve.</div>
+          </div>
+        </div>
+        <div class="forwho-item">
+          <span class="forwho-icon">🌙</span>
+          <div>
+            <div class="forwho-title">Travailleurs du soir</div>
+            <div class="forwho-desc">Mode circadien calé sur le vrai lever/coucher du soleil de votre ville. Transition invisible toutes les 500 ms.</div>
+          </div>
+        </div>
+        <div class="forwho-item">
+          <span class="forwho-icon">💻</span>
+          <div>
+            <div class="forwho-title">Utilisateurs laptop</div>
+            <div class="forwho-desc">Contrôle de la dalle interne via WMI, contraste et gains RGB simulés via GPU — même sans DDC-CI.</div>
+          </div>
+        </div>
+        <div class="forwho-item">
+          <span class="forwho-icon">⚙️</span>
+          <div>
+            <div class="forwho-title">Power users</div>
+            <div class="forwho-desc">Règles par app + titre de fenêtre (regex), planification horaire par profil, raccourcis globaux configurables.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 
 <!-- ── Features ────────────────────────────────────────────────────────────── -->
@@ -812,10 +953,10 @@
   <div class="container">
     <div class="features-header">
       <p class="section-label">Fonctionnalités</p>
-      <h2 class="section-title">Tout ce dont vous avez besoin, et bien plus...<br></h2>
+      <h2 class="section-title">Tout automatisé.<br>Tout en un seul endroit.</h2>
       <p class="section-sub">
-        Lumina Control va bien au-delà du curseur de luminosité.
-        Automatisation, gaming, règles par app — le contrôle complet.
+        Du mode circadien calé sur le soleil aux règles par application —
+        chaque fonctionnalité est là parce qu'elle manquait vraiment ailleurs.
       </p>
     </div>
 
@@ -1105,10 +1246,10 @@
       <div class="ss-why-icon">ℹ️</div>
       <div>
         Windows SmartScreen signale les logiciels qui ne possèdent pas de <strong>certificat de signature de code</strong>
-        — un certificat qui coûte plusieurs centaines d'euros par an, hors de portée pour un projet indépendant à 4€.
-        Lumina Control est <strong>open source</strong> : vous pouvez vérifier l'intégralité du code source sur
-        <a href="https://github.com/lumina-control-app/LuminaControl" target="_blank">GitHub</a>
-        avant d'installer.
+        — un certificat qui coûte plusieurs centaines d'euros par an, hors de portée pour un projet indépendant à 4 €.
+        Le code source de Lumina Control est <strong>disponible sur
+        <a href="https://github.com/lumina-control-app/LuminaControl" target="_blank">GitHub</a></strong> :
+        vous pouvez consulter le fonctionnement de l'application avant d'installer.
       </div>
     </div>
 
@@ -1199,7 +1340,8 @@
         <li>Support par email</li>
         <li>Windows 10 &amp; 11 (64-bit)</li>
       </ul>
-      <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-buy">Acheter maintenant</a>
+      <a href="https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda" class="btn-buy">Acheter maintenant — 4 €</a>
+      <div class="pricing-guarantee">🛡️ <strong>Remboursé sans question</strong> dans les 7 jours si ça ne fonctionne pas sur votre config.</div>
       <div class="pricing-note">Paiement sécurisé via LemonSqueezy · CB, PayPal</div>
     </div>
   </div>
@@ -1508,7 +1650,7 @@
       } else {
         vCls   = 'ok';
         vTitle = 'Probablement compatible';
-        vSub   = 'Windows 10/11 détecté. La compatibilité DDC-CI dépend de votre modèle d\'écran — les écrans externes modernes (HDMI, DisplayPort) le supportent dans 95 % des cas. Les écrans intégrés laptop ne sont pas supportés.';
+        vSub   = 'Windows 10/11 détecté. Les moniteurs externes (HDMI, DisplayPort) supportent DDC-CI dans 95 % des cas. Les dalles intégrées de laptop sont contrôlées via WMI — luminosité et courbes tonales fonctionnent même sans DDC-CI.';
       }
       verdict.className = 'compat-verdict ' + vCls;
       document.getElementById('verdict-title').textContent = vTitle;
