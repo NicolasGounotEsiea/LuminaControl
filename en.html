@@ -1540,7 +1540,7 @@
         if (pricingLabel) pricingLabel.textContent  = txt;
       }
       updateSpots(0);
-      fetch('https://eox4cwc7rkixiu6.m.pipedream.net')
+      fetch('https://script.google.com/macros/s/AKfycbwXNGmHCuJiBinxvPrZCNURWMQQgwVU-mgidA-KQfAttBvco3-aTY31jn4TiwYPZYRi/exec', { redirect: 'follow' })
         .then(function(r) { return r.json(); })
         .then(function(d) { updateSpots(d.count || 0); })
         .catch(function() {});

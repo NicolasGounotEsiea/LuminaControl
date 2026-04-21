@@ -1852,7 +1852,7 @@
     // ── Avis utilisateurs ─────────────────────────────────────────────
     (function() {
 
-      // ── Config — remplace ces deux URLs par tes endpoints Pipedream ──
+      // ── Config — endpoints Google Apps Script ──
       var REVIEWS_GET_URL  = 'https://script.google.com/macros/s/AKfycbxYbnARvXS0R8Lq0RYKuwlYXS2ANBOHe3WjY4HLJB4iEnkYtlncP1g6sCG74Qn8eb6Q/exec';
       var REVIEWS_POST_URL = 'https://script.google.com/macros/s/AKfycbxYbnARvXS0R8Lq0RYKuwlYXS2ANBOHe3WjY4HLJB4iEnkYtlncP1g6sCG74Qn8eb6Q/exec';
       // ────────────────────────────────────────────────────────────────
@@ -2014,7 +2014,7 @@
       // Valeur par défaut affichée immédiatement
       updateSpots(0);
 
-      fetch('https://eox4cwc7rkixiu6.m.pipedream.net')
+      fetch('https://script.google.com/macros/s/AKfycbwXNGmHCuJiBinxvPrZCNURWMQQgwVU-mgidA-KQfAttBvco3-aTY31jn4TiwYPZYRi/exec', { redirect: 'follow' })
         .then(function(r) { return r.json(); })
         .then(function(d) { updateSpots(d.count || 0); })
         .catch(function() { /* garde la valeur par défaut */ });
