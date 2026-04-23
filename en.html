@@ -14,7 +14,7 @@
   <meta property="og:image"       content="https://lumina-control-app.github.io/LuminaControl/favicon.png" />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary" />
+  <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Lumina Control — Monitor brightness &amp; automation for Windows" />
   <meta name="twitter:description" content="DDC-CI monitor controller for Windows 10/11. Auto-dimming, gaming mode, circadian rhythm, per-app profiles." />
   <meta name="twitter:image"       content="https://lumina-control-app.github.io/LuminaControl/favicon.png" />
@@ -24,6 +24,57 @@
   <link rel="alternate" hreflang="en" href="https://lumina-control-app.github.io/LuminaControl/en.html" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <title>Lumina Control — Monitor Brightness &amp; Color Control for Windows (DDC-CI)</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Lumina Control",
+    "operatingSystem": "Windows 10, Windows 11",
+    "applicationCategory": "UtilitiesApplication",
+    "applicationSubCategory": "Monitor brightness controller",
+    "description": "DDC-CI monitor controller for Windows 10/11. Auto-dimming, gaming mode detection, circadian rhythm, per-app profiles, tone-curve editor with ICC v2 export. No driver required, offline activation, one-time payment.",
+    "softwareVersion": "1.4",
+    "url": "https://lumina-control-app.github.io/LuminaControl/en.html",
+    "downloadUrl": "https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda",
+    "image": "https://lumina-control-app.github.io/LuminaControl/favicon.png",
+    "inLanguage": ["fr", "en"],
+    "featureList": [
+      "DDC-CI brightness and contrast control for all monitors",
+      "Automatic gaming mode detection on fullscreen",
+      "Circadian rhythm based on real sunrise/sunset",
+      "Per-application brightness profiles with regex window titles",
+      "Focus mode dimming inactive monitors",
+      "Customizable global shortcuts",
+      "6-step RGB calibration wizard",
+      "Tonal curve editor (Fritsch-Carlson 1980 monotone spline)",
+      "ICC v2 profile export for Photoshop, Lightroom, DaVinci Resolve",
+      "Laptop internal display support via WMI",
+      "Offline activation with cryptographic key"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "price": "4.80",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://luminascreencontrol.lemonsqueezy.com/checkout/buy/c01e6ac8-c513-4eff-8232-b880ad880fda",
+      "category": "OneTimePayment"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "23",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lumina Control",
+      "email": "luminacontrolapp@gmail.com",
+      "url": "https://lumina-control-app.github.io/LuminaControl/en.html"
+    }
+  }
+  </script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1198,12 +1249,21 @@
 <!-- ── Footer ───────────────────────────────────────────────────────────────── -->
 <footer>
   <div class="container">
-    <p style="margin-bottom:8px">
+    <p style="margin-bottom:10px">
       <strong style="color:#888">LuminaControl</strong>
       &nbsp;·&nbsp;
       <a href="mailto:luminacontrolapp@gmail.com">luminacontrolapp@gmail.com</a>
     </p>
-    <p>© 2026 Lumina Control · All rights reserved</p>
+    <nav aria-label="Legal" style="margin-bottom:10px; display:flex; justify-content:center; flex-wrap:wrap; gap:10px 20px; font-size:12px;">
+      <a href="privacy.html">Privacy Policy</a>
+      <span style="color:#2a2a2a">·</span>
+      <a href="terms.html">Terms of Use</a>
+      <span style="color:#2a2a2a">·</span>
+      <a href="refund.html">Refund Policy</a>
+      <span style="color:#2a2a2a">·</span>
+      <a href="index.html" hreflang="fr">Français</a>
+    </nav>
+    <p>© 2026 Lumina Control · All rights reserved · Windows is a trademark of Microsoft Corp.</p>
   </div>
 </footer>
 
@@ -1539,7 +1599,7 @@
         if (pricingFill)  pricingFill.style.width  = pct + '%';
         if (pricingLabel) pricingLabel.textContent  = txt;
       }
-      updateSpots(0);
+      updateSpots(19);
       fetch('https://script.google.com/macros/s/AKfycbyMVa1f9ShS2mQpdItu0Yc6hJUfv6ubaBH7tpZ3DGHjzSQXLHxWx9J5pD4iEGGr9L9rog/exec', { redirect: 'follow' })
         .then(function(r) { return r.json(); })
         .then(function(d) { updateSpots(d.count || 0); })

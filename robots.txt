@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lumina-control-app.github.io/LuminaControl/sitemap.xml
